@@ -1,0 +1,105 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.37.4.10188",
+      "templateHash": "473484680433423735"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources"
+      }
+    },
+    "virtualNetworkName": {
+      "type": "string",
+      "metadata": {
+        "description": "Virtual Network name"
+      }
+    },
+    "vnetAddressPrefixes": {
+      "type": "array",
+      "metadata": {
+        "description": "Virtual Network address space"
+      }
+    },
+    "subnetPeName": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet name for Private Endpoint"
+      }
+    },
+    "subnetPePrefixes": {
+      "type": "array",
+      "metadata": {
+        "description": "Subnet address range for Private Endpoint"
+      }
+    },
+    "subnetAcaName": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet name for Azure Container Apps"
+      }
+    },
+    "subnetAcaPrefixes": {
+      "type": "array",
+      "metadata": {
+        "description": "Subnet address range for Azure Container Apps"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2024-07-01",
+      "name": "[parameters('virtualNetworkName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": "[parameters('vnetAddressPrefixes')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "apiVersion": "2024-07-01",
+      "name": "[format('{0}/{1}', parameters('virtualNetworkName'), parameters('subnetPeName'))]",
+      "properties": {
+        "addressPrefixes": "[parameters('subnetPePrefixes')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "apiVersion": "2024-07-01",
+      "name": "[format('{0}/{1}', parameters('virtualNetworkName'), parameters('subnetAcaName'))]",
+      "properties": {
+        "addressPrefixes": "[parameters('subnetAcaPrefixes')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+      ]
+    }
+  ],
+  "outputs": {
+    "vnetId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+    },
+    "subnetPeId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/{1}', parameters('virtualNetworkName'), parameters('subnetPeName')), '/')[0], split(format('{0}/{1}', parameters('virtualNetworkName'), parameters('subnetPeName')), '/')[1])]"
+    },
+    "subnetAcaId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/{1}', parameters('virtualNetworkName'), parameters('subnetAcaName')), '/')[0], split(format('{0}/{1}', parameters('virtualNetworkName'), parameters('subnetAcaName')), '/')[1])]"
+    }
+  }
+}

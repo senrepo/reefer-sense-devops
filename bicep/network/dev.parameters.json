@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualNetworkName": {
+      "value": "vnet-dev"
+    },
+    "vnetAddressPrefixes": {
+      "value": [
+        "10.0.0.0/22"
+      ]
+    },
+    "subnetPeName": {
+      "value": "subnet-dev-pe"
+    },
+    "subnetPePrefixes": {
+      "value": [
+        "10.0.0.0/24"
+      ]
+    },
+    "subnetAcaName": {
+      "value": "subnet-dev-aca"
+    },
+    "subnetAcaPrefixes": {
+      "value": [
+        "10.0.1.0/24"
+      ]
+    }
+  }
+}
