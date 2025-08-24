@@ -6,7 +6,7 @@ az bicep build --file main.bicep
 az deployment group validate --resource-group rg-dev --template-file main.bicep --parameters dev-parameters.json
 
 # What-if check
-az deployment group what-if --resource-group rg-dev --template-file main.bicep --parameters prod-parameters.json
+az deployment group what-if --resource-group rg-dev --template-file main.bicep --parameters dev-parameters.json
 
 # Deploy
 az deployment group create  --resource-group rg-dev --template-file main.bicep  --parameters dev-parameters.json
