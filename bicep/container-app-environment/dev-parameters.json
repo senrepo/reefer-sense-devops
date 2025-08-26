@@ -1,0 +1,19 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "environmentName": {
+        "value": "cae-reefer-dev"
+      },
+      "vnetName": {
+        "value": "vnet-dev"
+      },
+      "subnetName": {
+        "value": "snet-cae-dev"
+      },
+      "logAnalyticsWorkspaceName": {
+        "value": "log-dev"
+      }
+    }
+  }
+  

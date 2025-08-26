@@ -8,7 +8,7 @@
 #az acr list -o table
 
 #login ACR
-az acr login --name acrreeferdev
+az acr login --name acrReeferDev
 
 #optional login using acr login password (refer ACR -> settings -> Access Keys)
 #docker login acrreeferdev.azurecr.io -u acrreeferdev -p <password>
@@ -18,13 +18,13 @@ $version = "v2"
 
 # Tag existing images
 docker tag iotgateway:dev acrreeferdev.azurecr.io/iotgateway:$version
-docker tag iotdataprocessor:dev acrreeferdev.azurecr.io/iotdataprocessor:$version
-docker tag iottelegramsimulator:dev acrreeferdev.azurecr.io/iottelegramsimulator:$version
+#docker tag iotdataprocessor:dev acrreeferdev.azurecr.io/iotdataprocessor:$version
+#docker tag iottelegramsimulator:dev acrreeferdev.azurecr.io/iottelegramsimulator:$version
 
 # Push the images to ACR
 docker push acrreeferdev.azurecr.io/iotgateway:$version
-docker push acrreeferdev.azurecr.io/iotdataprocessor:$version
-docker push acrreeferdev.azurecr.io/iottelegramsimulator:$version
+#docker push acrreeferdev.azurecr.io/iotdataprocessor:$version
+#docker push acrreeferdev.azurecr.io/iottelegramsimulator:$version
 
 # $version = "v1"
 # $images = @("iotgateway","iotdataprocessor","iottelegramsimulator")

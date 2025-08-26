@@ -13,11 +13,11 @@ param subnetPeName string
 @description('Subnet address range for Private Endpoint')
 param subnetPePrefixes array
 
-@description('Subnet name for Azure Container Apps')
-param subnetAcaName string
+@description('Subnet name for Azure Container Environment')
+param subnetCaeName string
 
 @description('Subnet address range for Azure Container Apps')
-param subnetAcaPrefixes array
+param subnetCaePrefixes array
 
 // ----------------- VNET -----------------
 resource vnet 'Microsoft.Network/virtualNetworks@2024-07-01' = {
@@ -39,9 +39,9 @@ resource subnetPe 'Microsoft.Network/virtualNetworks/subnets@2024-07-01' = {
 }
 
 resource subnetAca 'Microsoft.Network/virtualNetworks/subnets@2024-07-01' = {
-  name: '${vnet.name}/${subnetAcaName}'
+  name: '${vnet.name}/${subnetCaeName}'
   properties: {
-    addressPrefixes: subnetAcaPrefixes
+    addressPrefixes: subnetCaePrefixes
   }
 }
 

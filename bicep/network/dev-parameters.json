@@ -11,17 +11,17 @@
       ]
     },
     "subnetPeName": {
-      "value": "subnet-dev-pe"
+      "value": "snet-pe-dev"
     },
     "subnetPePrefixes": {
       "value": [
         "10.0.0.0/24"
       ]
     },
-    "subnetAcaName": {
-      "value": "subnet-dev-aca"
+    "subnetCaeName": {
+      "value": "snet-cae-dev"
     },
-    "subnetAcaPrefixes": {
+    "subnetCaePrefixes": {
       "value": [
         "10.0.1.0/24"
       ]

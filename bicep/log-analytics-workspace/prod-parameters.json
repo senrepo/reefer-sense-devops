@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "workspaceName": {
-        "value": "loganalytics"
+        "value": "log"
       },
       "environment": {
         "value": "prod"

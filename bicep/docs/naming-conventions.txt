@@ -1,0 +1,18 @@
+| Resource Type               | Pattern                                        | Example                        |
+| --------------------------- | ---------------------------------------------- | ------------------------------ |
+| **Resource Group**          | `rg-{app/solution}-{env}`                      | `rg-dev`                |
+| **Virtual Network**         | `vnet-{app/solution}-{env}`                    | `vnet-iotapp-dev`              |
+| **Subnet**                  | `snet-{function}`                              | `snet-gateway`, `snet-backend` |
+| **Storage Account**         | `st{app}{env}{unique}` (no dashes, 3–24 chars) | `stfinprod01`                  |
+| **App Service / Web App**   | `app-{app/solution}-{env}`                     | `app-portal-dev`               |
+| **App Service Plan**        | `asp-{app/solution}-{env}`                     | `asp-portal-prod`              |
+| **Function App**            | `func-{app/solution}-{env}`                    | `func-ingest-dev`              |
+| **SQL Server**              | `sql-{app/solution}-{env}`                     | `sql-finance-prod`             |
+| **SQL Database**            | `sqldb-{app/solution}-{env}`                   | `sqldb-orders-prod`            |
+| **Key Vault**               | `kv-{app/solution}-{env}`                      | `kv-iotapp-prod`               |
+| **Application Insights**    | `appi-{app/solution}-{env}`                    | `appi-gateway-dev`             |
+| **Log Analytics Workspace** | `log-{app/solution}-{env}`                     | `log-shared-prod`              |
+| **Container App Env**       | `cae-{app/solution}-{env}`                     | `cae-iotapp-dev`               |
+| **Container App**           | `ca-{service}-{env}`                           | `ca-gateway-prod`              |
+| **Service Bus Namespace**   | `sb-{app/solution}-{env}`                      | `sb-iot-dev`                   |
+| ** Container Registry**     | `acr{App/Solution}{Env}`                       | `acrReeferDev` |

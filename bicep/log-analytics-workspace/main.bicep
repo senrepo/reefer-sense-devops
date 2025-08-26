@@ -13,7 +13,7 @@ param retentionDays int = 30
 param location string = resourceGroup().location
 
 // Combine base name + environment
-var workspaceResourceName = '${workspaceName}${environment}'
+var workspaceResourceName = '${workspaceName}-${environment}'
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: workspaceResourceName

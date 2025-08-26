@@ -1,31 +1,30 @@
-  {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-      "virtualNetworkName": {
-        "value": "vnet-prod"
-      },
-      "vnetAddressPrefixes": {
-        "value": [
-          "10.1.0.0/22"
-        ]
-      },
-      "subnetPeName": {
-        "value": "subnet-prod-pe"
-      },
-      "subnetPePrefixes": {
-        "value": [
-          "10.1.0.0/24"
-        ]
-      },
-      "subnetAcaName": {
-        "value": "subnet-prod-aca"
-      },
-      "subnetAcaPrefixes": {
-        "value": [
-          "10.1.1.0/24"
-        ]
-      }
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualNetworkName": {
+      "value": "vnet-prod"
+    },
+    "vnetAddressPrefixes": {
+      "value": [
+        "10.0.0.0/22"
+      ]
+    },
+    "subnetPeName": {
+      "value": "snet-pe-prod"
+    },
+    "subnetPePrefixes": {
+      "value": [
+        "10.0.0.0/24"
+      ]
+    },
+    "subnetCaeName": {
+      "value": "snet-cae-prod"
+    },
+    "subnetCaePrefixes": {
+      "value": [
+        "10.0.1.0/24"
+      ]
     }
   }
-  
+}

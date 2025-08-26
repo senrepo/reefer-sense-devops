@@ -1,10 +1,30 @@
 @description('Location for all resources')
 param location string = resourceGroup().location
 
-@description('Servicebus name space')
-param servicebusNamespace string = 'servicebus-ns-reefer-dev'
+@description('Service Bus Namespace name')
+param servicebusNamespace string 
 
-resource servicebus 'Microsoft.ServiceBus/namespaces@2024-01-01' = {
+@description('List of queues to create inside the Service Bus namespace')
+param queues array = [
+  {
+    name: 'iot-raw-data-queue'
+    lockDuration: 'PT1M'
+    maxSizeInMegabytes: 1024
+    defaultMessageTimeToLive: 'P7D'
+    deadLetteringOnMessageExpiration: true
+    maxDeliveryCount: 10
+  }
+  {
+    name: 'iot-processed-data-queue'
+    lockDuration: 'PT2M'
+    maxSizeInMegabytes: 2048
+    defaultMessageTimeToLive: 'P14D'
+    deadLetteringOnMessageExpiration: true
+    maxDeliveryCount: 5
+  }
+]
+
+resource sbNamespace 'Microsoft.ServiceBus/namespaces@2024-01-01' = {
   name: servicebusNamespace
   location: location
   sku: {
@@ -12,18 +32,16 @@ resource servicebus 'Microsoft.ServiceBus/namespaces@2024-01-01' = {
     tier: 'Basic'
   }
   properties: {
-    premiumMessagingPartitions: 0
     minimumTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     disableLocalAuth: false
-    zoneRedundant: true
+    zoneRedundant: false
   }
 }
 
-resource servicebus_rootManageSharedAccessKey 'Microsoft.ServiceBus/namespaces/authorizationrules@2024-01-01' = {
-  parent: servicebus
+resource sbAuthRule 'Microsoft.ServiceBus/namespaces/AuthorizationRules@2024-01-01' = {
   name: 'RootManageSharedAccessKey'
-  location: location
+  parent: sbNamespace
   properties: {
     rights: [
       'Listen'
@@ -33,36 +51,27 @@ resource servicebus_rootManageSharedAccessKey 'Microsoft.ServiceBus/namespaces/a
   }
 }
 
-resource servicebus_network_ruleset 'Microsoft.ServiceBus/namespaces/networkrulesets@2024-01-01' = {
-  parent: servicebus
+resource sbNetworkRules 'Microsoft.ServiceBus/namespaces/networkRuleSets@2024-01-01' = {
   name: 'default'
-  location: location
+  parent: sbNamespace
   properties: {
     publicNetworkAccess: 'Enabled'
     defaultAction: 'Allow'
-    virtualNetworkRules: []
-    ipRules: []
     trustedServiceAccessEnabled: false
   }
 }
 
-resource servicebus_iot_raw_data_queue 'Microsoft.ServiceBus/namespaces/queues@2024-01-01' = {
-  parent: servicebus
-  name: 'iot-raw-data-queue'
-  location: location
+@batchSize(1)
+resource sbQueues 'Microsoft.ServiceBus/namespaces/queues@2024-01-01' = [for queue in queues: {
+  name: queue.name
+  parent: sbNamespace
   properties: {
-    maxMessageSizeInKilobytes: 256
-    lockDuration: 'PT1M'
-    maxSizeInMegabytes: 1024
-    requiresDuplicateDetection: false
-    requiresSession: false
-    defaultMessageTimeToLive: 'P7D'
-    deadLetteringOnMessageExpiration: true
+    lockDuration: queue.lockDuration
+    maxSizeInMegabytes: queue.maxSizeInMegabytes
+    defaultMessageTimeToLive: queue.defaultMessageTimeToLive
+    deadLetteringOnMessageExpiration: queue.deadLetteringOnMessageExpiration
     enableBatchedOperations: true
-    duplicateDetectionHistoryTimeWindow: 'PT10M'
-    maxDeliveryCount: 10
+    maxDeliveryCount: queue.maxDeliveryCount
     status: 'Active'
-    enablePartitioning: false
-    enableExpress: false
   }
-}
+}]
